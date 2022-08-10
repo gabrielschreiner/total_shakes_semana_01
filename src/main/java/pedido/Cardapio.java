@@ -1,37 +1,64 @@
 package pedido;
 
+import ingredientes.Fruta;
 import ingredientes.Ingrediente;
+import ingredientes.Topping;
 
 import java.util.TreeMap;
 
 public class Cardapio {
-    private TreeMap<Ingrediente,Double> precos;
+    private final TreeMap<Ingrediente, Double> precos;
 
-    public Cardapio(){
-        this.precos= new TreeMap<>();
+    public Cardapio() {
+        this.precos = new TreeMap<>(Ingrediente::compareTo);
     }
 
-    public TreeMap<Ingrediente, Double> getPrecos(){
+
+    public TreeMap<Ingrediente, Double> getPrecos() {
         return this.precos;
     }
 
-    public void adicionarIngrediente(Ingrediente ingrediente,Double preco){
-        //TODO
+    public void adicionarIngrediente(Ingrediente ingrediente, Double preco) {
+        verificaPrecoMaiorQueZero(preco);
+        precos.put(ingrediente, preco);
     }
 
-    public boolean atualizarIngrediente(Ingrediente ingrediente,Double preco){
-       //TODO
-        return true;
+    public void adicionarIngrediente(Fruta fruta, Double preco) {
+        verificaPrecoMaiorQueZero(preco);
+        this.precos.put(fruta, preco);
     }
 
-    public boolean removerIngrediente(Ingrediente ingrediente){
-       //TODO
-        return true;
+    public void adicionarIngrediente(Topping topping, Double preco) {
+        verificaPrecoMaiorQueZero(preco);
+        precos.put(topping, preco);
     }
 
-    public Double buscarPreco(Ingrediente ingrediente){
-        //TODO
-        return 0.0;
+    public void atualizarIngrediente(Ingrediente ingrediente, Double preco) {
+        verificaSeIngredienteExiste(ingrediente);
+        verificaPrecoMaiorQueZero(preco);
+        precos.replace(ingrediente, preco);
+    }
+
+    public void removerIngrediente(Ingrediente ingrediente) {
+        verificaSeIngredienteExiste(ingrediente);
+        precos.remove(ingrediente);
+    }
+
+    public Double buscarPreco(Ingrediente ingrediente) {
+        verificaSeIngredienteExiste(ingrediente);
+        return precos.get(ingrediente);
+    }
+
+    private void verificaPrecoMaiorQueZero(Double preco) {
+        if (preco <= 0) {
+            throw new IllegalArgumentException("Preco invalido.");
+        }
+    }
+
+    private void verificaSeIngredienteExiste(Ingrediente ingrediente) {
+        if (!precos.containsKey(ingrediente)) {
+            throw new IllegalArgumentException("Ingrediente nao existe no cardapio.");
+        }
     }
 
     @Override
