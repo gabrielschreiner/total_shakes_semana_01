@@ -234,7 +234,7 @@ recebeu a tarefa de implementá-lo. E para isso você deve seguir as seguintes e
 
 ```
 ::::: Cardapio ShakeCIT
-{Aveia=3.0, Banana=5.0, Iorgute=8.0, Mel=1.0, Morango=7.5, Sorvete=10.0}
+{Aveia=3.0, Banana=5.0, Iogurte=8.0, Mel=1.0, Morango=7.5, Sorvete=10.0}
 ::::: Criando um Shake Básico 1:1:1:0
 [Sorvete / Banana / Mel / [] / P / x1] - 1 - Pedro - pedro@email.com
 10.0
@@ -253,9 +253,9 @@ recebeu a tarefa de implementá-lo. E para isso você deve seguir as seguintes e
 [Sorvete / Banana / Mel / [] / P / x1] - 1 - Pedro - pedro@email.com
 [] - 1 - Pedro - pedro@email.com
 ::::: Item pedido com dois adicionais
-[Iorgute / Morango / Mel / [Banana, Morango] / P / x1] - 1 - Pedro - pedro@email.com
+[Iogurte / Morango / Mel / [Banana, Morango] / P / x1] - 1 - Pedro - pedro@email.com
 20.5
-[Iorgute / Morango / Mel / [Banana, Morango] / P / x3] - 1 - Pedro - pedro@email.com
+[Iogurte / Morango / Mel / [Banana, Morango] / P / x3] - 1 - Pedro - pedro@email.com
 61.5
 ::::: Serializando Cliente 1 e Desserializando Cliente 1
 1 - Pedro - pedro@email.com

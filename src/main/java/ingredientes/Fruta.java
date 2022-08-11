@@ -1,7 +1,7 @@
 package ingredientes;
 
 public class Fruta implements Adicional, Comparable<Ingrediente>, Ingrediente  {
-     private TipoFruta tipoFruta;
+     private final TipoFruta tipoFruta;
 
      public Fruta(TipoFruta tipoFruta) {
           this.tipoFruta = tipoFruta;
@@ -37,7 +37,7 @@ public class Fruta implements Adicional, Comparable<Ingrediente>, Ingrediente  {
      }
 
      @Override
-     public Enum obterTipo() {
+     public Enum<?> obterTipo() {
           return this.tipoFruta;
      }
 

@@ -3,9 +3,9 @@ package pedido;
 import java.io.*;
 
 public class Cliente implements Serializable {
-    private int id;
-    private String nome;
-    private String email;
+    private final int id;
+    private final String nome;
+    private final String email;
 
     public Cliente(int id, String nome, String email) {
         this.id = id;
@@ -14,7 +14,7 @@ public class Cliente implements Serializable {
     }
 
     public void serializarCliente(){
-        FileOutputStream fos = null;
+        FileOutputStream fos;
         ObjectOutputStream oos = null;
 
         try{
@@ -35,16 +35,14 @@ public class Cliente implements Serializable {
     }
 
     public static Cliente desserializarCliente(int id){
-        FileInputStream fis = null;
+        FileInputStream fis;
         ObjectInputStream ois = null;
 
         try{
             fis = new FileInputStream("Cliente-" + id + ".txt");
             ois = new ObjectInputStream(fis);
 
-            @SuppressWarnings("unchecked") Cliente cliente = (Cliente) ois.readObject();
-
-            return cliente;
+            return (Cliente) ois.readObject();
         }catch(Exception e){
             System.out.println("Nao foi possivel desserializar");
             return null;

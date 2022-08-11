@@ -2,7 +2,7 @@ package ingredientes;
 
 public class Base implements Ingrediente, Comparable<Ingrediente> {
 
-    private TipoBase tipoBase;
+    private final TipoBase tipoBase;
 
     public Base(TipoBase tipoBase) {
         this.tipoBase = tipoBase;
@@ -38,7 +38,7 @@ public class Base implements Ingrediente, Comparable<Ingrediente> {
     }
 
     @Override
-    public Enum obterTipo() {
+    public Enum<?> obterTipo() {
         return this.tipoBase;
     }
 }
