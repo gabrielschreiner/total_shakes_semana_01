@@ -1,14 +1,14 @@
 package produto;
 
 public enum TipoTamanho {
-    P,
-    M,
-    G;
+    P(1.0),
+    M(1.3),
+    G(1.5);
 
     public final double multiplicador;
 
-    TipoTamanho() {
-        multiplicador = 0;
+    TipoTamanho(final double multiplicador) {
+        this.multiplicador = multiplicador;
     }
 
 }

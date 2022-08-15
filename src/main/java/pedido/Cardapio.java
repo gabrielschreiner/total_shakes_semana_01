@@ -1,5 +1,7 @@
 package pedido;
 
+import exceptions.IngredienteInexistenteException;
+import exceptions.PrecoInvalidoException;
 import ingredientes.Fruta;
 import ingredientes.Ingrediente;
 import ingredientes.Topping;
@@ -23,16 +25,6 @@ public class Cardapio {
         precos.put(ingrediente, preco);
     }
 
-    public void adicionarIngrediente(Fruta fruta, Double preco) {
-        verificaPrecoMaiorQueZero(preco);
-        this.precos.put(fruta, preco);
-    }
-
-    public void adicionarIngrediente(Topping topping, Double preco) {
-        verificaPrecoMaiorQueZero(preco);
-        precos.put(topping, preco);
-    }
-
     public void atualizarIngrediente(Ingrediente ingrediente, Double preco) {
         verificaSeIngredienteExiste(ingrediente);
         verificaPrecoMaiorQueZero(preco);
@@ -49,15 +41,15 @@ public class Cardapio {
         return precos.get(ingrediente);
     }
 
-    private void verificaPrecoMaiorQueZero(Double preco) {
+    private void verificaPrecoMaiorQueZero(Double preco) throws PrecoInvalidoException {
         if (preco <= 0) {
-            throw new IllegalArgumentException("Preco invalido.");
+            throw new PrecoInvalidoException();
         }
     }
 
-    private void verificaSeIngredienteExiste(Ingrediente ingrediente) {
+    private void verificaSeIngredienteExiste(Ingrediente ingrediente) throws IngredienteInexistenteException {
         if (!precos.containsKey(ingrediente)) {
-            throw new IllegalArgumentException("Ingrediente nao existe no cardapio.");
+            throw new IngredienteInexistenteException();
         }
     }
 

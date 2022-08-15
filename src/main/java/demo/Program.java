@@ -11,20 +11,20 @@ import produto.TipoTamanho;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ingredientes.TipoFruta.Banana;
-import static ingredientes.TipoFruta.Morango;
+import static ingredientes.TipoFruta.BANANA;
+import static ingredientes.TipoFruta.MORANGO;
 
 public class Program {
     public static void main(String[] args) {
         Cliente cliente = new Cliente(1, "Pedro", "pedro@email.com");
         Cardapio cardapio = new Cardapio();
 
-        Base sorvete = new Base(TipoBase.Sorvete);
-        Base iogurte = new Base(TipoBase.Iogurte);
-        Fruta banana = new Fruta(Banana);
-        Fruta morango = new Fruta(Morango);
-        Topping mel = new Topping(TipoTopping.Mel);
-        Topping aveia = new Topping(TipoTopping.Aveia);
+        Base sorvete = new Base(TipoBase.SORVETE);
+        Base iogurte = new Base(TipoBase.IOGURTE);
+        Fruta banana = new Fruta(BANANA);
+        Fruta morango = new Fruta(MORANGO);
+        Topping mel = new Topping(TipoTopping.MEL);
+        Topping aveia = new Topping(TipoTopping.AVEIA);
 
         cardapio.adicionarIngrediente(sorvete, 10.0);
         cardapio.adicionarIngrediente(iogurte, 8.0);

@@ -1,5 +1,7 @@
 package pedido;
 
+import exceptions.IngredienteInexistenteException;
+import exceptions.ItemInexistenteException;
 import ingredientes.Adicional;
 import ingredientes.Base;
 import produto.TipoTamanho;
@@ -13,7 +15,7 @@ public class Pedido {
     private final ArrayList<ItemPedido> itens;
     private final Cliente cliente;
 
-    private int quantidade = 0;
+    private int     quantidade = 0;
     private int indice = 0;
 
     public Pedido(int id, ArrayList<ItemPedido> itens, Cliente cliente) {
@@ -38,14 +40,14 @@ public class Pedido {
         double total = 0;
 
         for (ItemPedido itemDoPedido : itens) {
-            Base baseDoPedido = itemDoPedido.getShake().getBase();
-            Double precoDaBase = cardapio.buscarPreco(baseDoPedido);
-            TipoTamanho tamanho = itemDoPedido.getShake().getTipoTamanho();
+            var baseDoPedido = itemDoPedido.getShake().getBase();
+            var precoDaBase = cardapio.buscarPreco(baseDoPedido);
+            var tamanho = itemDoPedido.getShake().getTipoTamanho();
 
             if (tamanho == TipoTamanho.G) {
-                total += (precoDaBase * 1.5) * itemDoPedido.getQuantidade();
+                total += tamanho.multiplicador * itemDoPedido.getQuantidade();
             } else if (tamanho == TipoTamanho.M) {
-                total += (precoDaBase * 1.3) * itemDoPedido.getQuantidade();
+                total += tamanho.multiplicador * itemDoPedido.getQuantidade();
             } else {
                 total += precoDaBase * itemDoPedido.getQuantidade();
             }
@@ -70,35 +72,28 @@ public class Pedido {
     }
 
     public void adicionarItemPedido(ItemPedido itemPedidoAdicionado) {
-        if (checaSeItemExiste(itemPedidoAdicionado)) {
-            itemPedidoAdicionado.setQuantidade(quantidade + itemPedidoAdicionado.getQuantidade());
-            itens.set(indice, itemPedidoAdicionado);
+        var shakeIndex = itens.indexOf(itemPedidoAdicionado); // retorna -1 caso ñ exista ou o índice se presente
+
+        if (shakeIndex != -1) {
+            var shake = itens.get(shakeIndex);
+            shake.setQuantidade(itemPedidoAdicionado.getQuantidade() + shake.getQuantidade());
         } else {
             itens.add(itemPedidoAdicionado);
         }
     }
 
-    public void removeItemPedido(ItemPedido itemPedidoRemovido) {
-        if (!checaSeItemExiste(itemPedidoRemovido)) {
-            throw new IllegalArgumentException("Item nao existe no pedido.");
-        } else {
-            itemPedidoRemovido.setQuantidade(quantidade - 1);
-            itens.set(indice, itemPedidoRemovido);
-            if (quantidade - 1 <= 0) {
-                itens.remove(itemPedidoRemovido);
-            }
-        }
-    }
+    public void removeItemPedido(ItemPedido itemPedidoRemovido) throws ItemInexistenteException {
+        var shakeIndex = itens.indexOf(itemPedidoRemovido);
 
-    private boolean checaSeItemExiste(ItemPedido itemParaChecar) {
-        for (ItemPedido item : itens) {
-            if (item.getShake().toString().equals(itemParaChecar.getShake().toString())) {
-                quantidade = item.getQuantidade();
-                indice = itens.indexOf(item);
-                return true;
-            }
+        if (shakeIndex != -1) {
+            var shake = itens.get(shakeIndex);
+            if (shake.getQuantidade() == 1)
+                itens.remove(itemPedidoRemovido);
+            else
+                shake.setQuantidade(shake.getQuantidade() - 1);
+            return;
         }
-        return false;
+        throw new ItemInexistenteException();
     }
 
     @Override
