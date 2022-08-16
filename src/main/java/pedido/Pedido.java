@@ -1,11 +1,8 @@
 package pedido;
 
 import exceptions.ItemInexistenteException;
-import ingredientes.Adicional;
-import produto.TipoTamanho;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Pedido {
 
@@ -32,46 +29,39 @@ public class Pedido {
     }
 
     public double calcularTotal(Cardapio cardapio) {
-        double total = 0;
-
-        for (ItemPedido itemDoPedido : itens) {
-            var baseDoPedido = itemDoPedido.getShake().getBase();
-            var precoDaBase = cardapio.buscarPreco(baseDoPedido);
-            var tamanho = itemDoPedido.getShake().getTipoTamanho();
-
-            if (tamanho == TipoTamanho.G) {
-                total += tamanho.multiplicador * itemDoPedido.getQuantidade();
-            } else if (tamanho == TipoTamanho.M) {
-                total += tamanho.multiplicador * itemDoPedido.getQuantidade();
-            } else {
-                total += precoDaBase * itemDoPedido.getQuantidade();
-            }
-        }
-        total += this.calcularAdicionais(cardapio);
-        return total;
+        return itens.stream()
+                .map(itemPedido -> {
+                    final var shake = itemPedido.getShake();
+                    final var adicionais = shake.getAdicionais();
+                    final var precoBase = cardapio.buscarPreco(shake.getBase()) * shake.getTipoTamanho().multiplicador;
+                    final var precoAdicionais = adicionais.stream().map(cardapio::buscarPreco).reduce(0.0, Double::sum);
+                    return ((precoBase + precoAdicionais) * itemPedido.getQuantidade());
+                })
+                .reduce(0.0, Double::sum);
     }
 
-    private double calcularAdicionais(Cardapio cardapio) {
-        double valorTotalAdicionais = 0;
+    int quantidade = 0;
+    int index = 0;
 
-        for (ItemPedido itemDoPedido : itens) {
-            double precoDosAdicionais = 0;
-            List<Adicional> adicionais = itemDoPedido.getShake().getAdicionais();
-
-            for (Adicional adicional : adicionais) {
-                precoDosAdicionais += cardapio.buscarPreco(adicional);
+    public boolean doesItemExiste(ItemPedido itemPedido) {
+        for (ItemPedido item : itens) {
+            var itemStringified = item.getShake().toString();
+            var itemPedidoStringified = itemPedido.getShake().toString();
+            if (itemStringified.equals(itemPedidoStringified)) {
+                quantidade = item.getQuantidade();
+                index = itens.indexOf(item);
+                return true;
+            } else {
+                return false;
             }
-            valorTotalAdicionais += precoDosAdicionais * itemDoPedido.getQuantidade();
         }
-        return valorTotalAdicionais;
+        return false;
     }
 
     public void adicionarItemPedido(ItemPedido itemPedidoAdicionado) {
-        var shakeIndex = itens.indexOf(itemPedidoAdicionado); // retorna -1 caso ñ exista ou o índice se presente
-
-        if (shakeIndex != -1) {
-            var shake = itens.get(shakeIndex);
-            shake.setQuantidade(itemPedidoAdicionado.getQuantidade() + shake.getQuantidade());
+        if (doesItemExiste(itemPedidoAdicionado)) {
+            itemPedidoAdicionado.setQuantidade(quantidade + itemPedidoAdicionado.getQuantidade());
+            itens.set(index, itemPedidoAdicionado);
         } else {
             itens.add(itemPedidoAdicionado);
         }
@@ -80,15 +70,15 @@ public class Pedido {
     public void removeItemPedido(ItemPedido itemPedidoRemovido) throws ItemInexistenteException {
         var shakeIndex = itens.indexOf(itemPedidoRemovido);
 
-        if (shakeIndex != -1) {
+        if (shakeIndex == -1) {
+            throw new ItemInexistenteException();
+        } else {
             var shake = itens.get(shakeIndex);
             if (shake.getQuantidade() == 1)
                 itens.remove(itemPedidoRemovido);
             else
                 shake.setQuantidade(shake.getQuantidade() - 1);
-            return;
         }
-        throw new ItemInexistenteException();
     }
 
     @Override

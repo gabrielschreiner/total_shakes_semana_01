@@ -1,5 +1,6 @@
 package pedido;
 
+import exceptions.ItemInexistenteException;
 import ingredientes.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -156,10 +157,11 @@ public class PedidoTest{
         ItemPedido itemPedidoRemovido = new ItemPedido(shakeRemovido, 10);
 
         pedido.adicionarItemPedido(itemPedido);
+        pedido.adicionarItemPedido(itemPedidoRemovido);
         pedido.removeItemPedido(itemPedidoRemovido);
 
         assertEquals(1, pedido.getItens().size());
-        assertEquals(2, pedido.getItens().get(0).getQuantidade());
+        assertEquals(12, pedido.getItens().get(0).getQuantidade());
     }
 
     @Test
@@ -179,10 +181,9 @@ public class PedidoTest{
         );
 
         ItemPedido itemPedido = new ItemPedido(shake, 1);
-        ItemPedido itemPedidoRemovido = new ItemPedido(shakeRemovido, 10);
 
         pedido.adicionarItemPedido(itemPedido);
-        pedido.removeItemPedido(itemPedidoRemovido);
+        pedido.removeItemPedido(itemPedido);
 
         assertEquals(0, pedido.getItens().size());
     }
@@ -213,7 +214,7 @@ public class PedidoTest{
             fail("Excecao nao encontrada.");
         }catch(Throwable e){
             assertEquals("Item nao existe no pedido.", e.getMessage());
-            assertEquals(IllegalArgumentException.class, e.getClass());
+            assertEquals(ItemInexistenteException.class, e.getClass());
         }
     }
 

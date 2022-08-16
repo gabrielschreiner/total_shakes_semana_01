@@ -1,5 +1,7 @@
 package pedido;
 
+import exceptions.IngredienteInexistenteException;
+import exceptions.PrecoInvalidoException;
 import ingredientes.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -59,7 +61,7 @@ public class CardapioTest {
             fail("Excecao nao encontrada");
         } catch (Throwable e) {
             assertEquals("Preco invalido.", e.getMessage());
-            assertEquals(IllegalArgumentException.class, e.getClass());
+            assertEquals(PrecoInvalidoException.class, e.getClass());
         }
 
         try {
@@ -67,7 +69,7 @@ public class CardapioTest {
             fail("Excecao nao encontrada");
         } catch (Throwable e) {
             assertEquals("Preco invalido.", e.getMessage());
-            assertEquals(IllegalArgumentException.class, e.getClass());
+            assertEquals(PrecoInvalidoException.class, e.getClass());
         }
     }
 
@@ -102,7 +104,7 @@ public class CardapioTest {
             fail("Excecao nao encontrada");
         } catch (Throwable e) {
             assertEquals("Preco invalido.", e.getMessage());
-            assertEquals(IllegalArgumentException.class, e.getClass());
+            assertEquals(PrecoInvalidoException.class, e.getClass());
         }
 
         try {
@@ -110,7 +112,7 @@ public class CardapioTest {
             fail("Excecao nao encontrada");
         } catch (Throwable e) {
             assertEquals("Preco invalido.", e.getMessage());
-            assertEquals(IllegalArgumentException.class, e.getClass());
+            assertEquals(PrecoInvalidoException.class, e.getClass());
         }
     }
 
@@ -129,7 +131,7 @@ public class CardapioTest {
             fail("Excecao nao encontrada");
         } catch (Throwable e) {
             assertEquals("Ingrediente nao existe no cardapio.", e.getMessage());
-            assertEquals(IllegalArgumentException.class, e.getClass());
+            assertEquals(IngredienteInexistenteException.class, e.getClass());
         }
     }
 
@@ -172,7 +174,7 @@ public class CardapioTest {
             fail("Excecao nao encontrada");
         } catch (Throwable e) {
             assertEquals("Ingrediente nao existe no cardapio.", e.getMessage());
-            assertEquals(IllegalArgumentException.class, e.getClass());
+            assertEquals(IngredienteInexistenteException.class, e.getClass());
         }
     }
 
@@ -196,7 +198,7 @@ public class CardapioTest {
             fail("Excecao nao encontrada");
         } catch (Throwable e) {
             assertEquals("Ingrediente nao existe no cardapio.", e.getMessage());
-            assertEquals(IllegalArgumentException.class, e.getClass());
+            assertEquals(IngredienteInexistenteException.class, e.getClass());
         }
     }
 
