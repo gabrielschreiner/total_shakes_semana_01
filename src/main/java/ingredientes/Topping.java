@@ -13,7 +13,7 @@ public class Topping implements Adicional, Comparable<Ingrediente> , Ingrediente
 
     @Override
     public int compareTo(Ingrediente ingrediente) {
-        return this.obterTipo().toString().compareTo(ingrediente.toString());
+        return this.obterTipo().toString().compareTo(ingrediente.obterTipo().toString());
     }
 
     @Override

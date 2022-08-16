@@ -24,7 +24,7 @@ public class Base implements Ingrediente, Comparable<Ingrediente> {
 
     @Override
     public int compareTo(Ingrediente ingrediente) {
-        return this.obterTipo().toString().compareToIgnoreCase(ingrediente.toString());
+        return this.obterTipo().toString().compareToIgnoreCase(ingrediente.obterTipo().toString());
     }
 
     @Override

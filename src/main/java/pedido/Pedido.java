@@ -1,9 +1,7 @@
 package pedido;
 
-import exceptions.IngredienteInexistenteException;
 import exceptions.ItemInexistenteException;
 import ingredientes.Adicional;
-import ingredientes.Base;
 import produto.TipoTamanho;
 
 import java.util.ArrayList;
@@ -14,9 +12,6 @@ public class Pedido {
     private final int id;
     private final ArrayList<ItemPedido> itens;
     private final Cliente cliente;
-
-    private int     quantidade = 0;
-    private int indice = 0;
 
     public Pedido(int id, ArrayList<ItemPedido> itens, Cliente cliente) {
         this.id = id;
