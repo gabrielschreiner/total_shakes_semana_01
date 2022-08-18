@@ -3,7 +3,7 @@ package pedido;
 import produto.Shake;
 
 public class ItemPedido {
-    private Shake shake;
+    private final Shake shake;
     private int quantidade;
 
     public ItemPedido(Shake shake, int quantidade) {

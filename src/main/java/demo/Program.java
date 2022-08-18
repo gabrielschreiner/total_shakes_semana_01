@@ -11,29 +11,32 @@ import produto.TipoTamanho;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ingredientes.TipoFruta.BANANA;
+import static ingredientes.TipoFruta.MORANGO;
+
 public class Program {
     public static void main(String[] args) {
-        Cliente cliente = new Cliente(1,"Pedro","pedro@email.com");
+        Cliente cliente = new Cliente(1, "Pedro", "pedro@email.com");
         Cardapio cardapio = new Cardapio();
 
-        Base sorvete = new Base(TipoBase.Sorvete);
-        Base iogurte = new Base(TipoBase.Iorgute);
-        Fruta banana = new Fruta(TipoFruta.Banana);
-        Fruta morango = new Fruta(TipoFruta.Morango);
-        Topping mel = new Topping(TipoTopping.Mel);
-        Topping aveia = new Topping(TipoTopping.Aveia);
+        Base sorvete = new Base(TipoBase.SORVETE);
+        Base iogurte = new Base(TipoBase.IOGURTE);
+        Fruta banana = new Fruta(BANANA);
+        Fruta morango = new Fruta(MORANGO);
+        Topping mel = new Topping(TipoTopping.MEL);
+        Topping aveia = new Topping(TipoTopping.AVEIA);
 
-        cardapio.adicionarIngrediente(sorvete,10.0);
-        cardapio.adicionarIngrediente(iogurte,8.0);
-        cardapio.adicionarIngrediente(banana,5.0);
-        cardapio.adicionarIngrediente(morango,7.5);
-        cardapio.adicionarIngrediente(mel,1.0);
+        cardapio.adicionarIngrediente(sorvete, 10.0);
+        cardapio.adicionarIngrediente(iogurte, 8.0);
+        cardapio.adicionarIngrediente(banana, 5.0);
+        cardapio.adicionarIngrediente(morango, 7.5);
+        cardapio.adicionarIngrediente(mel, 1.0);
         cardapio.adicionarIngrediente(aveia, 3.0);
 
-        Shake shake1 = new Shake(sorvete,banana,mel, TipoTamanho.P);
+        Shake shake1 = new Shake(sorvete, banana, mel, TipoTamanho.P);
 
-        ItemPedido itemPedido1 = new ItemPedido(shake1,1);
-        Pedido pedido1 = new Pedido(1, new ArrayList<>(List.of(itemPedido1)),cliente);
+        ItemPedido itemPedido1 = new ItemPedido(shake1, 1);
+        Pedido pedido1 = new Pedido(1, new ArrayList<>(List.of(itemPedido1)), cliente);
 
         System.out.println("::::: Cardapio ShakeCIT");
         System.out.println(cardapio.getPrecos());
@@ -70,7 +73,7 @@ public class Program {
         System.out.println(pedido2);
 
         System.out.println("::::: Item pedido com dois adicionais");
-        Shake shake3 = new Shake(iogurte, morango, mel, new ArrayList<>(List.of(morango, banana)), TipoTamanho.P);
+        Shake shake3 = new Shake(iogurte, morango, mel, new ArrayList<>(List.of(banana, morango)), TipoTamanho.P);
         ItemPedido itemPedido3 = new ItemPedido(shake3, 1);
         Pedido pedido3 = new Pedido(3, new ArrayList<>(List.of(itemPedido3)), cliente);
         System.out.println(pedido3);

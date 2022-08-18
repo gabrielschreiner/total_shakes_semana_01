@@ -3,9 +3,9 @@ package pedido;
 import java.io.*;
 
 public class Cliente implements Serializable {
-    private int id;
-    private String nome;
-    private String email;
+    private final int id;
+    private final String nome;
+    private final String email;
 
     public Cliente(int id, String nome, String email) {
         this.id = id;
@@ -13,46 +13,44 @@ public class Cliente implements Serializable {
         this.email = email;
     }
 
-    public void serializarCliente(){
-        FileOutputStream fos = null;
+    public void serializarCliente() {
+        FileOutputStream fos;
         ObjectOutputStream oos = null;
 
-        try{
+        try {
             fos = new FileOutputStream("Cliente-" + this.id + ".txt");
             oos = new ObjectOutputStream(fos);
             oos.writeObject(this);
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println("Nao foi possivel serializar");
-        }finally{
-            if(oos != null){
-                try{
+        } finally {
+            if (oos != null) {
+                try {
                     oos.close();
-                }catch(IOException e){
+                } catch (IOException e) {
                     System.out.println("Nao foi possivel fechar o arquivo");
                 }
             }
         }
     }
 
-    public static Cliente desserializarCliente(int id){
-        FileInputStream fis = null;
+    public static Cliente desserializarCliente(int id) {
+        FileInputStream fis;
         ObjectInputStream ois = null;
 
-        try{
+        try {
             fis = new FileInputStream("Cliente-" + id + ".txt");
             ois = new ObjectInputStream(fis);
 
-            @SuppressWarnings("unchecked") Cliente cliente = (Cliente) ois.readObject();
-
-            return cliente;
-        }catch(Exception e){
+            return (Cliente) ois.readObject();
+        } catch (Exception e) {
             System.out.println("Nao foi possivel desserializar");
             return null;
-        }finally{
-            if(ois != null){
-                try{
+        } finally {
+            if (ois != null) {
+                try {
                     ois.close();
-                }catch(IOException e){
+                } catch (IOException e) {
                     System.out.println("Nao foi possivel fechar o arquivo");
                 }
             }
