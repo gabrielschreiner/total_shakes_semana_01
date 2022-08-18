@@ -28,7 +28,6 @@ public class Pedido {
         return this.cliente;
     }
 
-
     public double calcularTotal(Cardapio cardapio) {
         return itens.stream()
                 .map(itemPedido -> {
