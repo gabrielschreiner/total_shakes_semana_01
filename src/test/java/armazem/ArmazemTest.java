@@ -34,7 +34,8 @@ class ArmazemTest {
 
     @Test
     @DisplayName("Teste de cadastro de ingredientes")
-    public void testCadastrarIngredienteEmEstoque() throws IngredienteCadastradoException {
+    public void testCadastrarIngredienteEmEstoque() throws IngredienteCadastradoException, IngredienteNaoEncontradoException {
+
         armazem.cadastrarIngredienteEmEstoque(base);
         armazem.cadastrarIngredienteEmEstoque(fruta);
         armazem.cadastrarIngredienteEmEstoque(topping);
@@ -58,6 +59,7 @@ class ArmazemTest {
     @ValueSource(ints = {2, 3, 5})
     public void testConsultarQuantidadeDoIngredienteEmEstoque(Integer quantidade)
             throws QuantidadeIngredienteInvalidaException, IngredienteNaoEncontradoException, IngredienteCadastradoException {
+
         armazem.cadastrarIngredienteEmEstoque(topping);
         assertEquals(0, armazem.consultarQuantidadeDoIngredienteEmEstoque(topping));
 
@@ -103,6 +105,7 @@ class ArmazemTest {
     @Test
     public void testDescadastrarIngredienteEmEstoque()
             throws QuantidadeIngredienteInvalidaException, IngredienteNaoEncontradoException, IngredienteCadastradoException {
+
         armazem.cadastrarIngredienteEmEstoque(base);
         armazem.adicionarQuantidadeDoIngredienteEmEstoque(base, 2);
 

@@ -23,28 +23,20 @@ public class Armazem {
     }
 
     public void descadastrarIngredienteEmEstoque(Ingrediente ingrediente) throws IngredienteNaoEncontradoException {
-        if (!estoque.containsKey(ingrediente)) throw new IngredienteNaoEncontradoException();
-        estoque.remove(ingrediente);
+        estoque.remove(checaIngredienteEncontrado(ingrediente));
     }
 
     public void adicionarQuantidadeDoIngredienteEmEstoque(Ingrediente ingrediente, Integer quantidade)
             throws QuantidadeIngredienteInvalidaException, IngredienteNaoEncontradoException {
         if (quantidade <= 0) throw new QuantidadeIngredienteInvalidaException();
-        if (!estoque.containsKey(ingrediente)) {
-            throw new IngredienteNaoEncontradoException();
-        }
-        estoque.replace(ingrediente, estoque.get(ingrediente) + quantidade);
+        estoque.replace(checaIngredienteEncontrado(ingrediente), estoque.get(ingrediente) + quantidade);
     }
 
     public void reduzirQuantidadeDoIngredienteEmEstoque(Ingrediente ingrediente, Integer quantidade)
             throws IngredienteNaoEncontradoException, QuantidadeIngredienteInvalidaException {
         if (quantidade <= 0) throw new QuantidadeIngredienteInvalidaException();
 
-        if (!estoque.containsKey(ingrediente)) {
-            throw new IngredienteNaoEncontradoException();
-        }
-
-        if (estoque.containsKey(ingrediente) && (estoque.get(ingrediente).equals(quantidade))) {
+        if (estoque.get(checaIngredienteEncontrado(ingrediente)).equals(quantidade)) {
             estoque.remove(ingrediente);
         } else {
             estoque.replace(ingrediente, estoque.get(ingrediente) - quantidade);
@@ -52,8 +44,14 @@ public class Armazem {
     }
 
     public Integer consultarQuantidadeDoIngredienteEmEstoque(Ingrediente ingrediente) throws IngredienteNaoEncontradoException {
-        if (!estoque.containsKey(ingrediente)) throw new IngredienteNaoEncontradoException();
-        return estoque.get(ingrediente);
+        return estoque.get(checaIngredienteEncontrado(ingrediente));
+    }
+
+    private Ingrediente checaIngredienteEncontrado(Ingrediente ingrediente) throws IngredienteNaoEncontradoException {
+        if (!estoque.containsKey(ingrediente)) {
+            throw new IngredienteNaoEncontradoException();
+        }
+        return ingrediente;
     }
 
     public TreeMap<Ingrediente, Integer> getEstoque() {
