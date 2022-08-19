@@ -22,7 +22,7 @@ class ArmazemTest {
 
     @BeforeAll
     static void beforeAll() {
-        base = new Base(TipoBase.SORVETE);
+        base = new Base(TipoBase.LEITE);
         fruta = new Fruta(TipoFruta.ABACATE);
         topping = new Topping(TipoTopping.MEL);
     }
