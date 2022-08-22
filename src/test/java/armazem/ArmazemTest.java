@@ -34,7 +34,7 @@ class ArmazemTest {
 
     @Test
     @DisplayName("Teste de cadastro de ingredientes")
-    public void testCadastrarIngredienteEmEstoque() throws IngredienteCadastradoException, IngredienteNaoEncontradoException {
+    public void testCadastrarIngredienteEmEstoque() throws IngredienteCadastradoException {
 
         armazem.cadastrarIngredienteEmEstoque(base);
         armazem.cadastrarIngredienteEmEstoque(fruta);
