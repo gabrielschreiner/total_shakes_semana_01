@@ -5,16 +5,15 @@ import exceptions.IngredienteNaoEncontradoException;
 import exceptions.QuantidadeIngredienteInvalidaException;
 import ingredientes.Ingrediente;
 
-import java.io.Serializable;
-import java.util.List;
+import java.util.Objects;
 import java.util.TreeMap;
 
 public class Armazem {
 
-    private final TreeMap<Ingrediente, Integer> estoque;
+    private TreeMap<Ingrediente, Integer> estoque;
 
     public Armazem() {
-        this.estoque = new TreeMap<>(Ingrediente::compareTo);
+        setEstoque(new TreeMap<>(Ingrediente::compareTo));
     }
 
     public void cadastrarIngredienteEmEstoque(Ingrediente ingrediente) throws IngredienteCadastradoException {
@@ -56,5 +55,22 @@ public class Armazem {
 
     public TreeMap<Ingrediente, Integer> getEstoque() {
         return estoque;
+    }
+
+    public void setEstoque(TreeMap<Ingrediente, Integer> estoque) {
+        this.estoque = estoque;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Armazem)) return false;
+        Armazem armazem = (Armazem) o;
+        return Objects.equals(estoque, armazem.estoque);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(estoque);
     }
 }
