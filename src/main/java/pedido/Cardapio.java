@@ -2,9 +2,7 @@ package pedido;
 
 import exceptions.IngredienteInexistenteException;
 import exceptions.PrecoInvalidoException;
-import ingredientes.Fruta;
 import ingredientes.Ingrediente;
-import ingredientes.Topping;
 
 import java.util.TreeMap;
 
